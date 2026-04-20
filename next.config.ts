@@ -3,6 +3,39 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Hide the dev-only "N" Next.js badge that overlaps the hero.
   devIndicators: false,
+  // If someone lands on a *.vercel.app preview / deployment URL, bounce
+  // them to s.com.do so the canonical host is always visible.
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "^(?<sub>.+)\\.vercel\\.app$",
+          },
+        ],
+        destination: "https://s.com.do/:path*",
+        permanent: true,
+      },
+    ];
+  },
+  // Scrub the default "x-powered-by: Next.js" header.
+  poweredByHeader: false,
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          // Generic server label so the fingerprint doesn't scream Vercel.
+          { key: "x-server", value: "s.com.do" },
+          // Small security / privacy hygiene add-ons at no extra cost.
+          { key: "x-content-type-options", value: "nosniff" },
+          { key: "referrer-policy", value: "strict-origin-when-cross-origin" },
+        ],
+      },
+    ];
+  },
   images: {
     // Shorter cache in dev so a regenerated hero picks up without a full rebuild.
     minimumCacheTTL: 60,
