@@ -51,6 +51,7 @@ export default function LandingPage() {
 
             {/* Name — all white, letters bounce on hover then spring back */}
             <BouncyName text="Joaquin Sanchez" />
+            {/* On mobile, push the info upward so the tap hint stays readable */}
 
 
             {/* Role */}
@@ -550,29 +551,24 @@ function AnimatedHero({
         initial={{ opacity: 0 }}
         animate={{ opacity: zoomDone ? 1 : 0 }}
         transition={{ duration: 0.8 }}
-        className="pointer-events-none absolute z-10 monitor-breathe"
-        style={{
-          left: "0%",
-          top: "2%",
-          width: "34%",
-          height: "56%",
-        }}
+        className="pointer-events-none absolute z-10 monitor-breathe
+                   left-[0%] top-[2%] w-[34%] h-[56%]
+                   max-md:left-0 max-md:right-0 max-md:top-1/2 max-md:-translate-y-1/2
+                   max-md:w-full max-md:h-1/3"
       />
 
-      {/* Invisible click target on the monitor region. Cursor + hover bloom
-          are the only affordance. */}
+      {/* Invisible click target on the monitor region. On mobile the image
+          is heavily cropped, so we expand the hit area to the middle band
+          of the viewport so any tap near the monitors works. */}
       <motion.button
         onClick={onEnterHypervisor}
         aria-label="Open Proxmox"
         initial={{ opacity: 0 }}
         animate={{ opacity: zoomDone ? 1 : 0 }}
-        className="group absolute z-20 cursor-pointer"
-        style={{
-          left: "0%",
-          top: "2%",
-          width: "34%",
-          height: "56%",
-        }}
+        className="group absolute z-20 cursor-pointer
+                   left-[0%] top-[2%] w-[34%] h-[56%]
+                   max-md:left-0 max-md:right-0 max-md:top-1/2 max-md:-translate-y-1/2
+                   max-md:w-full max-md:h-1/3"
       >
         <span
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -581,6 +577,10 @@ function AnimatedHero({
               "radial-gradient(ellipse at center, rgba(77,214,255,0.35), transparent 65%)",
           }}
         />
+        {/* Mobile-only tap hint so users know where to tap */}
+        <span className="md:hidden absolute left-1/2 -translate-x-1/2 top-2 px-3 py-1 text-[10px] font-mono tracking-[0.3em] bg-black/80 text-cyan-200 border border-cyan-300/60 rounded-full whitespace-nowrap">
+          tap to enter ▶
+        </span>
       </motion.button>
     </div>
   );

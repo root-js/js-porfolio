@@ -1,5 +1,8 @@
 "use client";
 
+// Tailwind safelist — dynamic col-span values used by <PaneCard> / <SummaryTile>:
+// md:col-span-3 md:col-span-4 md:col-span-5 md:col-span-6 md:col-span-7 md:col-span-8 md:col-span-12
+
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
@@ -53,6 +56,8 @@ export default function HypervisorPage() {
     x: number;
     y: number;
   } | null>(null);
+  // Mobile-only: sidebar is a drawer, hidden by default.
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [clock, setClock] = useState("--:--:--");
   const [taskLogOpen, setTaskLogOpen] = useState(true);
 
@@ -87,8 +92,18 @@ export default function HypervisorPage() {
       className="h-screen w-full flex flex-col bg-[#111418] text-zinc-200 font-sans text-[13px] overflow-hidden"
     >
       {/* ============ PVE Header Bar ============ */}
-      <header className="h-[46px] flex items-center justify-between px-3 bg-[#1b1e23] border-b border-black/40 flex-none">
-        <div className="flex items-center gap-4">
+      <header className="h-[46px] flex items-center justify-between px-2 md:px-3 bg-[#1b1e23] border-b border-black/40 flex-none">
+        <div className="flex items-center gap-3 md:gap-4 min-w-0">
+          {/* Hamburger — mobile only */}
+          <button
+            onClick={() => setSidebarOpen((v) => !v)}
+            aria-label="Toggle server view"
+            className="md:hidden w-8 h-8 flex flex-col items-center justify-center gap-[3px] rounded hover:bg-white/10"
+          >
+            <span className="block w-4 h-[2px] bg-zinc-200" />
+            <span className="block w-4 h-[2px] bg-zinc-200" />
+            <span className="block w-4 h-[2px] bg-zinc-200" />
+          </button>
           <ProxmoxLogo />
           <div className="text-[13px] text-zinc-300 hidden md:block">
             Virtual Environment{" "}
@@ -103,28 +118,41 @@ export default function HypervisorPage() {
         </div>
 
         <div className="flex items-center gap-1.5">
-          <HeaderBtn label="Documentation" />
-          <HeaderBtn label="Create VM" primary />
-          <HeaderBtn label="Create CT" />
-          <div className="px-3 text-[12px] text-zinc-300 border-l border-zinc-700 ml-1">
+          <HeaderBtn label="Documentation" hiddenOnMobile />
+          <HeaderBtn label="Create VM" primary hiddenOnMobile />
+          <HeaderBtn label="Create CT" hiddenOnMobile />
+          <div className="hidden sm:block px-3 text-[12px] text-zinc-300 border-l border-zinc-700 ml-1">
             {profile.handle.toLowerCase()}@pam
           </div>
           <Link
             href="/"
-            className="px-3 py-1.5 text-[12px] text-zinc-300 hover:bg-black/40"
+            className="px-2 md:px-3 py-1.5 text-[12px] text-zinc-300 hover:bg-black/40"
           >
             Logout
           </Link>
-          <span className="px-2 text-[12px] text-zinc-500 font-mono">
+          <span className="hidden sm:inline px-2 text-[12px] text-zinc-500 font-mono">
             {clock}
           </span>
         </div>
       </header>
 
       {/* ============ Body ============ */}
-      <div className="flex-1 min-h-0 flex">
-        {/* Sidebar */}
-        <aside className="w-[320px] flex-none bg-[#171a1f] border-r border-black/40 flex flex-col min-h-0">
+      <div className="flex-1 min-h-0 flex relative">
+        {/* Mobile backdrop when drawer is open */}
+        {sidebarOpen && (
+          <div
+            className="md:hidden absolute inset-0 z-20 bg-black/60"
+            onClick={() => setSidebarOpen(false)}
+            aria-hidden
+          />
+        )}
+
+        {/* Sidebar — static on desktop, drawer on mobile */}
+        <aside
+          className={`w-[280px] md:w-[320px] flex-none bg-[#171a1f] border-r border-black/40 flex flex-col min-h-0 absolute md:static inset-y-0 left-0 z-30 transition-transform md:transition-none ${
+            sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+          }`}
+        >
           <div className="px-3 py-2 text-[12px] text-zinc-400 bg-[#1b1e23] border-b border-black/40 flex items-center justify-between">
             <span>Server View</span>
             <span className="text-zinc-600">▾</span>
@@ -148,6 +176,7 @@ export default function HypervisorPage() {
                 onClick={() => {
                   setSelectedId(v.id);
                   setTab("Summary");
+                  setSidebarOpen(false);
                 }}
               />
             ))}
@@ -202,6 +231,7 @@ export default function HypervisorPage() {
                   onClick={() => {
                     setSelectedId(`home-${h.vmid}`);
                     setTab("Summary");
+                    setSidebarOpen(false);
                   }}
                   onHover={setTooltip}
                 />
@@ -230,6 +260,7 @@ export default function HypervisorPage() {
                   onClick={() => {
                     setSelectedId(`home-${h.vmid}`);
                     setTab("Summary");
+                    setSidebarOpen(false);
                   }}
                   onHover={setTooltip}
                 />
@@ -247,6 +278,7 @@ export default function HypervisorPage() {
                   onClick={() => {
                     setSelectedId(`home-${h.vmid}`);
                     setTab("Summary");
+                    setSidebarOpen(false);
                   }}
                   onHover={setTooltip}
                 />
@@ -426,13 +458,17 @@ function ProxmoxLogo() {
 function HeaderBtn({
   label,
   primary,
+  hiddenOnMobile,
 }: {
   label: string;
   primary?: boolean;
+  hiddenOnMobile?: boolean;
 }) {
   return (
     <button
       className={`px-3 py-1.5 text-[12px] rounded border transition ${
+        hiddenOnMobile ? "hidden md:inline-block" : ""
+      } ${
         primary
           ? "bg-[#E57000] border-[#E57000] text-white hover:brightness-110"
           : "bg-[#2a2f36] border-[#4a5058] text-zinc-200 hover:bg-[#343a42]"
@@ -1013,7 +1049,7 @@ function SummaryTile({
 }) {
   return (
     <div
-      className={`col-span-${colSpan} bg-[#1b1e23] border border-black/40 rounded p-4`}
+      className={`col-span-12 md:col-span-${colSpan} bg-[#1b1e23] border border-black/40 rounded p-4`}
     >
       <div className="text-[11px] text-zinc-500 uppercase tracking-wider">
         {label}
@@ -1045,7 +1081,7 @@ function PaneCard({
 }) {
   return (
     <section
-      className={`col-span-${colSpan} bg-[#1b1e23] border border-black/40 rounded`}
+      className={`col-span-12 md:col-span-${colSpan} bg-[#1b1e23] border border-black/40 rounded`}
     >
       <header className="px-4 py-2 text-[12px] text-zinc-300 bg-[#22262c] border-b border-black/40 flex items-center gap-2">
         {icon && <span>{icon}</span>}
