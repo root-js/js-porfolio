@@ -481,6 +481,9 @@ function AnimatedHero({
 
   return (
     <div className="absolute inset-0 overflow-hidden">
+      {/* Portrait-mobile nudge: image is landscape 16:9, looks best rotated. */}
+      <RotateHint zoomDone={zoomDone} />
+
       <motion.div
         className="absolute inset-0"
         initial={{
@@ -522,7 +525,7 @@ function AnimatedHero({
 
         {/* Steam plume over the mate gourd (bottom-left) */}
         <Steam
-          style={{ left: "12%", top: "55%", width: "4%", height: "18%" }}
+          style={{ left: "6%", top: "55%", width: "4%", height: "18%" }}
           delay={0}
           zoomDone={zoomDone}
         />
@@ -557,9 +560,7 @@ function AnimatedHero({
                    max-md:w-full max-md:h-1/3"
       />
 
-      {/* Invisible click target on the monitor region. On mobile the image
-          is heavily cropped, so we expand the hit area to the middle band
-          of the viewport so any tap near the monitors works. */}
+      {/* LEFT monitor (Proxmox) click target */}
       <motion.button
         onClick={onEnterHypervisor}
         aria-label="Open Proxmox"
@@ -577,9 +578,103 @@ function AnimatedHero({
               "radial-gradient(ellipse at center, rgba(77,214,255,0.35), transparent 65%)",
           }}
         />
+        {/* Desktop hover label: "Portfolio" */}
+        <span
+          className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                     px-4 py-2 text-xs font-mono tracking-[0.35em] uppercase
+                     bg-black/85 text-cyan-200 border border-cyan-300/70 rounded
+                     opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                     pointer-events-none shadow-xl whitespace-nowrap"
+        >
+          Portfolio ▶
+        </span>
         {/* Mobile-only tap hint so users know where to tap */}
         <span className="md:hidden absolute left-1/2 -translate-x-1/2 top-2 px-3 py-1 text-[10px] font-mono tracking-[0.3em] bg-black/80 text-cyan-200 border border-cyan-300/60 rounded-full whitespace-nowrap">
           tap to enter ▶
+        </span>
+      </motion.button>
+
+      {/* Two tiny Amazon link hotspots — sized to roughly half a credit card.
+          Wrapped in an image-aspect container so percent positions track
+          the image regardless of viewport. z-30 above monitor hotspots. */}
+      <div
+        className="hidden md:block absolute z-30 pointer-events-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        style={{
+          width: "max(100vw, calc(100vh * 1376 / 768))",
+          height: "max(100vh, calc(100vw * 768 / 1376))",
+        }}
+      >
+        <ProductHotspot
+          zoomDone={zoomDone}
+          href="https://www.amazon.com/Atomic-Habits-James-Clear-Proven/dp/B0GJ4MWCMP"
+          label="Atomic Habits · James Clear"
+          style={{ left: "55.5%", top: "12%", width: "6%", height: "4%" }}
+        />
+        <ProductHotspot
+          zoomDone={zoomDone}
+          href="https://www.amazon.com/dp/B000LAKYW8"
+          label="Casio F-91W · silver metal bracelet"
+          style={{ left: "85%", top: "69%", width: "3%", height: "4%" }}
+        />
+        <ProductHotspot
+          zoomDone={zoomDone}
+          href="https://www.amazon.com/dp/B098D3TSYP"
+          label="Casio G-Shock GW-M5610U"
+          style={{ left: "88%", top: "69%", width: "3%", height: "4%" }}
+        />
+        <ProductHotspot
+          zoomDone={zoomDone}
+          href="https://www.amazon.com/dp/B0B8ZPLLGW"
+          label="Leuchtturm1917 A5 · Navy"
+          style={{ left: "20%", top: "70%", width: "8%", height: "12%" }}
+        />
+        <PhoneContactHotspot
+          zoomDone={zoomDone}
+          style={{ left: "38.25%", top: "79%", width: "4%", height: "8.5%" }}
+        />
+        <ProductHotspot
+          zoomDone={zoomDone}
+          href="https://www.amazon.com/dp/B0BS1XZY7T"
+          label="Garmin Forerunner 965 · White"
+          style={{ left: "43%", top: "70%", width: "3%", height: "4%" }}
+        />
+      </div>
+
+      {/* RIGHT monitor (Azure Portal) click target — also goes to hypervisor.
+          On desktop this covers the right monitor; on mobile the left
+          hotspot already spans the middle band so we hide this one. */}
+      <motion.div
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: zoomDone ? 1 : 0 }}
+        transition={{ duration: 0.8 }}
+        className="hidden md:block pointer-events-none absolute z-10 monitor-breathe
+                   left-[34%] top-[4.5%] w-[29%] h-[56%]"
+      />
+      <motion.button
+        onClick={onEnterHypervisor}
+        aria-label="Open Azure Portal"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: zoomDone ? 1 : 0 }}
+        className="hidden md:block group absolute z-20 cursor-pointer
+                   left-[34%] top-[4.5%] w-[29%] h-[56%]"
+      >
+        <span
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(0,120,212,0.35), transparent 65%)",
+          }}
+        />
+        {/* Desktop hover label: "Portfolio" */}
+        <span
+          className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                     px-4 py-2 text-xs font-mono tracking-[0.35em] uppercase
+                     bg-black/85 text-sky-200 border border-sky-300/70 rounded
+                     opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                     pointer-events-none shadow-xl whitespace-nowrap"
+        >
+          Portfolio ▶
         </span>
       </motion.button>
     </div>
@@ -593,7 +688,7 @@ function BouncyName({ text }: { text: string }) {
       initial="rest"
       animate="rest"
       whileHover="bounce"
-      className="text-white font-semibold leading-[0.95] tracking-tight mt-2 text-4xl md:text-5xl lg:text-6xl cursor-default select-none whitespace-nowrap"
+      className="text-amber-400 font-semibold leading-[0.95] tracking-tight mt-2 text-3xl md:text-4xl lg:text-5xl cursor-default select-none whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]"
     >
       {letters.map((ch, i) => {
         if (ch === " ") return <span key={i}>&nbsp;</span>;
@@ -622,6 +717,127 @@ function BouncyName({ text }: { text: string }) {
         );
       })}
     </motion.h1>
+  );
+}
+
+function ProductHotspot({
+  href,
+  label,
+  style,
+  zoomDone,
+}: {
+  href: string;
+  label: string;
+  style: React.CSSProperties;
+  zoomDone: boolean;
+}) {
+  return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer sponsored"
+      aria-label={label}
+      title={label}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: zoomDone ? 1 : 0 }}
+      transition={{ duration: 0.8 }}
+      className="hidden md:block group absolute cursor-pointer pointer-events-auto"
+      style={style}
+    >
+      {/* Subtle amber outline on hover so the clickable area is obvious */}
+      <span
+        className="absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+        style={{
+          boxShadow:
+            "inset 0 0 0 2px rgba(229,160,13,0.65), 0 0 12px rgba(229,160,13,0.35)",
+        }}
+      />
+      {/* Full-label tooltip still appears on hover, below the item */}
+      <span
+        className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap
+                   px-2 py-1 text-[10px] font-mono tracking-wide
+                   bg-black/90 text-amber-200 border border-amber-300/50 rounded
+                   opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                   pointer-events-none shadow-xl"
+        style={{ top: "calc(100% + 6px)" }}
+      >
+        {label} ↗
+      </span>
+    </motion.a>
+  );
+}
+
+/* Transparent click zone positioned over the Pixel 9 Pro in the hero
+   image. Routes to the Contact VM (email client). Shows "Contact @me"
+   tooltip on hover. The phone face-up + Outlook Mobile UI is rendered
+   in the hero image itself (generated via Gemini). */
+function PhoneContactHotspot({
+  zoomDone,
+  style,
+}: {
+  zoomDone: boolean;
+  style: React.CSSProperties;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: zoomDone ? 1 : 0 }}
+      transition={{ duration: 0.8 }}
+      className="hidden md:block absolute pointer-events-auto"
+      style={style}
+    >
+      <Link
+        href="/vm/contact"
+        aria-label="Contact me — opens email client"
+        className="group relative block w-full h-full cursor-pointer"
+      >
+        {/* Soft blue outline on hover so the clickable area is obvious */}
+        <span
+          className="absolute inset-0 rounded-md opacity-0
+                     group-hover:opacity-100 transition-opacity duration-200"
+          style={{
+            boxShadow:
+              "inset 0 0 0 2px rgba(0,120,212,0.75), 0 0 16px rgba(0,120,212,0.55)",
+          }}
+        />
+        {/* Hover tooltip */}
+        <span
+          className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap
+                     px-2 py-1 text-[10px] font-mono tracking-wide
+                     bg-black/90 text-sky-200 border border-sky-300/60 rounded
+                     opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                     pointer-events-none shadow-xl"
+          style={{ top: "calc(100% + 6px)" }}
+        >
+          Contact @me ✉
+        </span>
+      </Link>
+    </motion.div>
+  );
+}
+
+/* Subtle portrait-mobile hint to rotate phone to landscape. Hidden on
+   md+ viewports and on landscape phones. Tappable to dismiss. */
+function RotateHint({ zoomDone }: { zoomDone: boolean }) {
+  const [dismissed, setDismissed] = useState(false);
+  if (dismissed) return null;
+  return (
+    <button
+      type="button"
+      onClick={() => setDismissed(true)}
+      aria-label="Rotate phone for best view"
+      className="rotate-hint md:hidden landscape:hidden
+                 fixed z-50 left-1/2 -translate-x-1/2 top-3
+                 flex items-center gap-2 px-3 py-2
+                 text-[11px] font-mono tracking-[0.25em] uppercase
+                 bg-black/85 text-cyan-200 border border-cyan-300/60 rounded-full
+                 shadow-xl backdrop-blur-sm
+                 transition-opacity duration-700"
+      style={{ opacity: zoomDone ? 1 : 0 }}
+    >
+      <span className="rotate-hint-icon" aria-hidden>↻</span>
+      <span>Rotate for best view</span>
+    </button>
   );
 }
 

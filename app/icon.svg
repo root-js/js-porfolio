@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="geometricPrecision">
+  <!-- Dark rounded background matches the site deep-bg #03060d -->
+  <rect width="64" height="64" rx="12" fill="#03060d"/>
+
+  <!-- Tortoiseshell gradient for the frames: warm amber/caramel base -->
+  <defs>
+    <linearGradient id="tort" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#d6923d"/>
+      <stop offset="55%" stop-color="#a0561f"/>
+      <stop offset="100%" stop-color="#6d340d"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#c4772c"/>
+      <stop offset="100%" stop-color="#884213"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Brow bar across the top of the lenses (Montblanc MB0089OK signature) -->
+  <rect x="9" y="20" width="46" height="7" rx="3" fill="url(#bar)"/>
+
+  <!-- Mottling specks on the brow bar -->
+  <circle cx="14" cy="23.5" r="1.4" fill="#3d1f0a"/>
+  <circle cx="21" cy="22.5" r="0.9" fill="#f1c47d"/>
+  <circle cx="27" cy="24"   r="1.2" fill="#3d1f0a"/>
+  <circle cx="34" cy="23"   r="0.9" fill="#f1c47d"/>
+  <circle cx="40" cy="24.5" r="1.3" fill="#3d1f0a"/>
+  <circle cx="47" cy="22.5" r="0.9" fill="#f1c47d"/>
+  <circle cx="52" cy="24"   r="1.2" fill="#3d1f0a"/>
+
+  <!-- Left lens -->
+  <circle cx="19" cy="38" r="11" fill="none" stroke="url(#tort)" stroke-width="3.5"/>
+  <!-- Right lens -->
+  <circle cx="45" cy="38" r="11" fill="none" stroke="url(#tort)" stroke-width="3.5"/>
+
+  <!-- Bridge between the lenses -->
+  <path d="M29 34 Q32 31 35 34" fill="none" stroke="url(#tort)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Subtle lens glint (upper-left reflection) -->
+  <circle cx="15" cy="34" r="2"   fill="#ffffff" opacity="0.12"/>
+  <circle cx="41" cy="34" r="2"   fill="#ffffff" opacity="0.12"/>
+</svg>

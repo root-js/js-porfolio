@@ -30,6 +30,44 @@ body {
   color: var(--sl-ink);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  /* Deterrent: disable text selection + drag. Inputs + textareas
+     explicitly re-enable selection below so the contact form still works. */
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+img,
+video {
+  -webkit-user-drag: none;
+  pointer-events: auto;
+}
+
+/* Portrait-mobile "rotate your phone" nudge */
+.rotate-hint {
+  animation: rotate-hint-bob 2.6s ease-in-out infinite;
+}
+.rotate-hint-icon {
+  display: inline-block;
+  animation: rotate-hint-spin 2.6s ease-in-out infinite;
+}
+@keyframes rotate-hint-bob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 2px); }
+}
+@keyframes rotate-hint-spin {
+  0%, 55%, 100% { transform: rotate(0deg); }
+  70%           { transform: rotate(-90deg); }
+  85%           { transform: rotate(-90deg); }
 }
 
 /* Solo Leveling jagged panel clip */

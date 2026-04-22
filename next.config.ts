@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Hide the dev-only "N" Next.js badge that overlaps the hero.
   devIndicators: false,
+  // Don't ship browser source maps in production — makes the minified
+  // JS bundle harder to read (not a substitute for real security; the
+  // code is still in the browser).
+  productionBrowserSourceMaps: false,
   // If someone lands on a *.vercel.app preview / deployment URL, bounce
   // them to s.com.do so the canonical host is always visible.
   async redirects() {
@@ -29,9 +33,28 @@ const nextConfig: NextConfig = {
         headers: [
           // Generic server label so the fingerprint doesn't scream Vercel.
           { key: "x-server", value: "s.com.do" },
-          // Small security / privacy hygiene add-ons at no extra cost.
+          // Security / privacy hygiene.
           { key: "x-content-type-options", value: "nosniff" },
           { key: "referrer-policy", value: "strict-origin-when-cross-origin" },
+          { key: "x-frame-options", value: "SAMEORIGIN" },
+          { key: "strict-transport-security", value: "max-age=63072000; includeSubDomains; preload" },
+          { key: "permissions-policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
+          {
+            key: "content-security-policy",
+            value: [
+              "default-src 'self'",
+              "img-src 'self' data: https:",
+              "media-src 'self' https:",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com https://www.youtube-nocookie.com https://s.ytimg.com",
+              "style-src 'self' 'unsafe-inline'",
+              "font-src 'self' data:",
+              "connect-src 'self' https://api.resend.com",
+              "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+            ].join("; "),
+          },
         ],
       },
     ];

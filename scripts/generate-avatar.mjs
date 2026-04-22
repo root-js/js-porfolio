@@ -35,45 +35,53 @@ const srcB64 = fs.readFileSync(SRC_PATH).toString("base64");
 
 const PROMPT = `
 Redraw this headshot as a clean **modern anime portrait illustration**
-(NOT a photo edit, NOT a stylized filter on the photo — a genuine anime
-illustration in the same style as a Ghost in the Shell / Cowboy Bebop /
-Psycho-Pass character portrait). Semi-realistic anime, cel-shaded,
-mature proportions, refined line art.
+— semi-realistic anime, cel-shaded, refined line art, Ghost in the
+Shell / Psycho-Pass / Cowboy Bebop stylistic family. It must match
+the character already shown in the main site hero image at this
+workstation. NOT a photo edit, NOT a filter — a genuine anime redraw.
 
-The subject is Joaquin Sanchez, 45, fit. Preserve his core likeness —
-face shape, nose, jaw, salt-and-pepper beard, warm light-olive skin
-tone, friendly confident expression (subtle smile), posture — but use
-PROPER ANIME HEAD PROPORTIONS (the head/face should feel naturally
-sized, stylized, NOT oversized or photo-proportions on an anime body).
-Redraw him; do not just trace or re-lit the reference.
+SUBJECT is the SAME anime character from the site's main hero image:
+a 45-year-old fit Latino man with warm **light-olive skin**, a
+**salt-and-pepper short beard**, a bald head, strong jaw, confident
+subtle smile, mature but athletic.
 
-CHANGES / DETAILS:
-1. Bald scalp — smooth shaved head, stylized anime highlight on the
-   crown, no hairline, no stubble on the head. Warm olive skin
-   continuity from face to scalp.
-2. Glasses: **Montblanc MB0089OK in TORTOISESHELL** — the actual
-   colorway. These are thin-to-medium metal-and-acetate aviator-style
-   rectangular frames where the brow bar and upper rim are a warm
-   **tortoiseshell acetate** (amber/caramel/dark-brown mottled pattern
-   with honey-gold speckles) and the lower rim is a very thin metal
-   (gunmetal/bronze). Clear non-tinted lenses with a subtle
-   highlight. Sitting naturally on the bridge of his nose. This is
-   the HERO detail of the portrait — render the tortoiseshell pattern
-   clearly.
-3. Wardrobe — same navy blazer over a light blue dress shirt, top
-   button open. Shoulders/upper chest visible.
+CRITICAL POSE CHANGE — this is the difference from prior attempts:
+- **STRICTLY FRONT-FACING**. Head and shoulders directly facing the
+  camera, eyes looking into the lens. NOT three-quarter, NOT in
+  profile. Symmetrical composition.
+- Both eyes fully visible behind the glasses.
+- Shoulders squared to the camera.
 
-COMPOSITION:
-- Tight head-and-shoulders portrait, three-quarter front-facing.
-- Soft neutral warm-grey studio background with a gentle vignette.
-- Centered, circular crop friendly. Leave clean negative space at
-  the top/sides so the image works inside a circular frame mask.
+BEARD — make sure it IS rendered:
+- Short, neatly groomed salt-and-pepper beard covering the jawline
+  and upper lip (mustache connected to the beard).
+- NOT clean-shaven. NOT just stubble. A visible, intentional beard
+  exactly like the main hero character's.
 
-QUALITY:
-- Sharp, clean anime line art + cel-shaded color blocks + subtle
-  gradient highlights.
-- Do not output a photo. Output an ANIME ILLUSTRATION of him.
-- No text, no logos, no watermarks.
+GLASSES: **Montblanc MB0089OK in tortoiseshell** — warm amber/caramel
+acetate brow bar with dark-brown mottling and honey-gold speckles,
+thin metal lower rim (gunmetal/bronze), clear non-tinted lenses.
+Symmetric on his nose since he is directly front-facing.
+
+HEAD PROPORTIONS: proper anime stylization — naturally sized head,
+NOT a photo-proportioned head on an anime body. Clean anime crown
+highlight on the bald scalp.
+
+WARDROBE: navy blazer over a light blue dress shirt, top button
+open. Shoulders visible.
+
+COMPOSITION / CROP:
+- Tight head-and-shoulders portrait.
+- Centered, symmetrical so the image works inside a circular crop.
+- Soft warm-grey studio background with a subtle vignette.
+- Leave clean negative space at the corners of the square so the
+  circular mask doesn't clip the head or shoulders.
+
+STYLE TARGET: identical aesthetic to the main hero illustration
+that shows this same character typing at a home-office workstation
+at night. Anime line art, cel-shaded, refined color blocks.
+
+Do NOT output a photo. Do NOT add text, logos, or watermarks.
 `.trim();
 
 const body = {

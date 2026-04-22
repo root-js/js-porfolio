@@ -95,14 +95,14 @@ export const vms: Vm[] = [
   },
   {
     id: "contact",
-    name: "manjaro-contact-01",
-    os: "Manjaro Linux",
+    name: "win11-outlook-01",
+    os: "Windows 11 Enterprise · AVD Gold Image",
     status: "running",
-    cpu: 4,
-    mem: 18,
-    uptime: "89d 02h",
+    cpu: 6,
+    mem: 24,
+    uptime: "12d 07h",
     label: "Contact",
-    description: "Send a message via Thunderbird",
+    description: "Send a message via Outlook (corporate client)",
   },
 ];
 

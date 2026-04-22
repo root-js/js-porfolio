@@ -37,6 +37,12 @@ const EDC_PATH = fs.existsSync("/tmp/edc-small.jpg")
 const TATTOO_PATH = fs.existsSync("/tmp/tatto-small.jpg")
   ? "/tmp/tatto-small.jpg"
   : path.resolve("public/tatto.jpg");
+const MATE_PATH = fs.existsSync("/tmp/mate-small.jpg")
+  ? "/tmp/mate-small.jpg"
+  : path.resolve("public/mate.jpg");
+const MERCK_PATH = fs.existsSync("/tmp/merck-small.png")
+  ? "/tmp/merck-small.png"
+  : path.resolve("public/merck-logo.png");
 const OUT_PATH = path.resolve("public/joaquin-anime.png");
 
 for (const p of [FACE_PATH, EDC_PATH, TATTOO_PATH]) {
@@ -49,6 +55,8 @@ for (const p of [FACE_PATH, EDC_PATH, TATTOO_PATH]) {
 const faceB64 = fs.readFileSync(FACE_PATH).toString("base64");
 const edcB64 = fs.readFileSync(EDC_PATH).toString("base64");
 const tattooB64 = fs.readFileSync(TATTOO_PATH).toString("base64");
+const mateB64 = fs.readFileSync(MATE_PATH).toString("base64");
+const merckB64 = fs.readFileSync(MERCK_PATH).toString("base64");
 
 const PROMPT = `
 Wide cinematic 16:9 anime illustration, 2K sharpness, modern
@@ -59,19 +67,30 @@ no rune effects, no cyberpunk neon city.
 
 COMPOSITION — ZOOMED OUT WIDE:
 Pull the camera way back so the viewer can see the ENTIRE desk, the
-chair, the man, the floor beneath the desk, the wall behind, and a
-LARGE bright home-office window on the right side of the frame. The
-man and desk together should occupy roughly the left 55% of the frame;
-the window and wall occupy the right 45%. We can see him from head to
-hips, hands on keyboard, the whole desk surface with all items, the
-chair back, a strip of floor. Think: establishing shot of a home
-office, not a close-up portrait.
+chair, the man, the floor beneath the desk, and the wall behind.
+
+**CHARACTER PLACEMENT — CRITICAL:**
+- The **man is seated on the RIGHT side of the frame**, occupying
+  roughly the right 35-40% of the width, facing **LEFT** toward the
+  monitors. We see him from the back-right three-quarter angle —
+  over his right shoulder into the monitors.
+- The **two monitors are in the CENTER / CENTER-LEFT** of the frame.
+- The **home-office window with the night-time backyard view is on
+  the FAR RIGHT**, behind / to the right of the man (visible over
+  his right shoulder / above his chair back, not blocked by the
+  monitors).
+- **Do NOT place the man on the left side of the frame.** The
+  character always sits on the right, facing left at the monitors.
+
+We see him from head to hips, hands on keyboard, the whole desk
+surface with all items, the chair back, a strip of floor.
 
 SUBJECT (reference image #1 is the face):
-A 45-year-old fit Latino man with a **LIGHT OLIVE skin tone** — a
-warm golden-tan complexion, neither pale nor dark, a Mediterranean /
-Caribbean olive. Use this skin tone consistently on face, neck, hands,
-and any exposed forearm. Three-quarter side view from the back-right —
+A 45-year-old fit Latino man with a **MEDIUM OLIVE skin tone** —
+warm golden-tan complexion, a touch darker than light olive
+(noticeably sun-kissed but not dark), Caribbean / Mediterranean
+olive with a warm undertone. Use this skin tone consistently on
+face, neck, hands, and any exposed forearm. Three-quarter side view from the back-right —
 we see his profile and over his shoulder into the monitors. Preserve
 the bald head, salt-and-pepper short beard, nose bridge, jaw
 silhouette. Age subtly for 45: crow's feet at the eye, a few forehead
@@ -80,10 +99,23 @@ forearms, good posture. He is ACTIVELY TYPING — both hands on a
 mechanical keyboard, fingers mid-motion, eyes on the center monitor,
 focused, calm.
 
-GLASSES (important): **Montblanc MB0089OK** — thin titanium/metal
-rectangular frames, slightly slim modern aviator, dark gunmetal or
-matte black, clear (non-tinted) lenses. Understated luxury. Visible
-clearly on his face in profile.
+**WRIST — LEFT wrist wears a WHITE Garmin Forerunner 965.** On his
+**LEFT wrist only** (the arm WITHOUT the koi tattoo) render a
+**Garmin Forerunner 965 in the white colorway**: white silicone
+band on both sides, titanium bezel, round AMOLED screen face-up
+(a simple running data face or clean dark watch face visible),
+worn snug at the wrist. Clearly recognizable as a Garmin Forerunner
+965. The **RIGHT wrist stays BARE** — no watch, no band, only the
+solid black rectangular tattoo cuff from reference #3.
+
+GLASSES (CRITICAL — must match the avatar portrait):
+**Montblanc MB0089OK in TORTOISESHELL** — warm amber/caramel
+acetate brow bar with dark-brown mottling and honey-gold speckles.
+Thin metal lower rim (gunmetal/bronze). Clear non-tinted lenses.
+**NOT plain black, NOT gunmetal, NOT clear frames** — the hero
+detail is the tortoiseshell pattern on the brow bar. Render it
+clearly and identically to the tortoise frames on the avatar
+portrait already live on the About VM.
 
 WARDROBE: dark navy or charcoal fitted button-up shirt, **sleeves
 rolled up to just below the elbow on BOTH arms** so the forearms are
@@ -129,67 +161,164 @@ monitor spill become more prominent now that the daylight is gone.
 Keep the office itself cozy and inviting — not dark and moody.
 
 DESK (full length visible edge-to-edge):
-A clean black or dark walnut wide desk. NO desk lamp. From LEFT to
-RIGHT across the desk surface:
-- A leather-wrapped **mate gourd** with a silver bombilla straw
-  (small South American yerba mate cup), steam rising gently.
-- An open walnut EDC organizer tray with: a silver Casio F-91W
-  watch, a black Casio G-Shock DW-5600 PROTECTION watch, a green-G10
-  folding pocket knife in its slot, a white AirPods Pro case, an
-  Apple TV Siri Remote, two clear-barrel Burberry pens side by side.
-- Center: a mechanical keyboard (he is TYPING on it, both hands on
-  keys), a precision mouse to its right.
-- His iPhone (black case) face-down beside the keyboard.
-- Right: a **Leuchtturm1917 A5 hardcover notebook in NAVY BLUE** —
-  lying flat OR stood slightly upright — NOT an iPad. Details:
-  matte navy-blue hardcover, square-edged corners, rounded spine, a
-  thin **elastic band closure** across the front cover, a small
-  horizontal label area on the front, a thin **red/orange ribbon
-  bookmark** peeking out from between the pages. Roughly A5 size.
-  Classic bullet-journal look. Do NOT show a tablet, iPad, or any
-  screen here.
-- **NO coffee mug, NO Ember mug, NO tablet, NO iPad** — do not
-  render any drinking mug or any tablet/iPad anywhere on the desk.
-  The only beverage is the mate gourd. The only paper/device is
-  the navy Leuchtturm1917 bullet journal.
+A clean dark walnut wide desk. NO desk lamp. NO coffee/Ember mug.
+NO iPad, NO tablet, NO Burberry pens. Items, LEFT to RIGHT:
+
+1. **Mate gourd** (left side of the desk) — this is Joaquin's actual
+   gourd (reference #4): burgundy-purple leather-wrapped rounded
+   body, polished stainless-steel rim at the top, silver bombilla
+   (metal straw) curving up, a faint handwritten "Joaquin" signature
+   etched/burned into the leather on the front, three small leather
+   feet at the base. A thin wisp of steam rising. Do NOT draw a
+   generic cup.
+
+2. **Navy Leuchtturm1917 A5 bullet journal** — matte navy-blue
+   hardcover, square corners, rounded spine, elastic-band closure
+   across the front, a small horizontal label area, a red/orange
+   ribbon bookmark peeking from the pages. Lying closed on the desk
+   to the left of the keyboard, near the mate gourd.
+
+3. **Mechanical keyboard** center, both of his hands actively TYPING
+   on it, precision black mouse to the right.
+
+4. **Merck employee ID badge — EXACTLY ONE, lying flat on the
+   desk** between the keyboard and the Pixel phone, partly in the
+   light. **Do NOT render a second badge, do NOT render the same
+   badge duplicated or mirrored, do NOT render a badge hanging
+   from a lanyard around his neck.** Only one badge in the entire
+   scene, sitting flat on the desk surface. Credit-card-sized
+   vertical orientation, matte-white plastic:
+   - Top: the **MERCK wordmark** in the specific green/teal
+     (#00857C) exactly as reference #5 shows it
+   - Below the logo: a small square anime portrait of the SAME
+     character (bald head, short salt-and-pepper beard, tortoiseshell
+     Montblanc glasses, navy blazer on a light-blue shirt, front-
+     facing, confident subtle smile) — tiny, badge-photo scale
+   - Below the photo: "JOAQUIN SANCHEZ" in small bold black caps and
+     "Virtualization & Cloud Architect" on a second line
+   - A thin black lanyard clip at the top of the badge
+   Position the badge visibly but not center-stage — accent detail.
+
+5. **Pixel 9 Pro** (NOT an iPhone) face-up beside the keyboard:
+   - Obsidian-black Pixel 9 Pro with its signature **horizontal
+     camera bar** running across the back (three lenses + flash in a
+     metallic raised bar). If face-up, show the screen dark; if face-
+     down, show the distinctive camera bar. Clearly a Pixel, NOT an
+     iPhone. Google's "G" logo faint on the back.
+
+6. **Walnut EDC organizer tray** — **NOT on the main desk.** The
+   tray sits on a **small secondary side table** (a narrow accent
+   table / low end-table) placed to the **RIGHT of the main desk**,
+   next to the man's chair at roughly chair-arm height. The side
+   table is a separate surface — not the same wood as the desk,
+   slightly lower, small footprint (just wide enough to hold the
+   tray). The EDC tray rests flat on that side table, fully
+   visible and UNOBSTRUCTED by the man's arm or chair, tilted
+   slightly so ALL of its contents are clearly readable from the
+   viewer's angle. Every item below MUST be visible.
+
+   Open walnut tray, shallow, black felt lining.
+
+   **NO TABLET, NO iPad, NO secondary screen anywhere in this
+   scene.** The side table holds the EDC tray only — nothing
+   propped up behind it. The only screens in the scene are the
+   TWO monitors above the keyboard — nothing else.
+
+   CRITICAL — NO duplicates. Draw exactly these SIX distinct items,
+   ONE of each, arranged neatly side by side:
+
+   a. **Casio F-91W — SILVER metal version**: stainless-steel
+      bracelet and silver metal case, small rectangular digital
+      face. Looks like the vintage metal F-91W variant.
+   b. **Casio F-91W — CLASSIC black plastic version**: black resin
+      case AND black resin strap, same small rectangular digital
+      face. The iconic $15 plastic watch.
+   c. **Casio G-Shock DW-5600 PROTECTION**: black square/octagonal
+      face, much larger than the F-91W, red accent on the bezel,
+      "G-SHOCK" + "PROTECTION" text.
+   d. **Civivi Elementum folding pocket knife** — green G10 scales,
+      **FOLDED SHUT / CLOSED** (blade fully hidden inside the
+      handle, just a compact green knife body resting flat). NOT
+      open, NOT deployed. **ONLY ONE KNIFE. Draw exactly one. Do
+      not draw a second or mirror-image knife.**
+   e. **White AirPods Pro case** — closed, rounded Apple pebble.
+   f. **Nothing Ear earbuds case** — transparent/clear plastic with
+      visible internal components, white accents.
+
+   DO NOT render two of any item. DO NOT include Burberry pens.
+   DO NOT include the Apple TV Siri Remote. Six items, all unique.
 
 MONITORS (behind the keyboard) — EXACTLY TWO MONITORS, not three:
 A clean **dual-monitor** setup on slim black stands, side by side,
-matching size.
-- LEFT monitor shows a detailed **Proxmox VE dashboard**: the
-  distinctive **orange Proxmox cube logo** top-left, sidebar tree
-  with VM entries like "Datacenter > pve-east-01 > 101 (vm)", tabs
-  across the top (Summary, Console, Hardware...), CPU/memory line
-  graphs in the main pane. Dark gray PVE interface.
-- RIGHT monitor shows the **Merck corporate website** — a modern
-  pharma corporate page with the **Merck green "M" wordmark logo**
-  at the top-left (Merck's logo is a bold uppercase "MERCK" in a
-  specific green/teal color #00857c, often with a simple geometric
-  mark). Clean white corporate layout, hero image of a modern lab,
-  headline text, navigation bar. Professional, recognizable as
-  Merck & Co.
-- Do NOT include a third monitor, network topology, or terminal
-  screen.
+matching size. **Both monitors in DARK MODE** — no bright white UIs.
 
-ROOM:
-Clean modern home office. Light wood floor, neutral warm-gray or
-off-white walls, a small indoor plant in the corner. Ergonomic
-office chair (black, mesh back). Soft ambient daylight from the
-window on the right. **NO desk lamp anywhere in the scene** — all
-light comes from the window daylight and the ambient overhead.
+- LEFT monitor: **Proxmox VE 9 · DARK MODE dashboard**. Dark gray
+  chrome (#1a1d22), orange accents (#E57000 for the Proxmox cube
+  logo top-left). Left sidebar shows the **"Datacenter (Merck
+  Environment)"** tree FULLY EXPANDED and prominent, with the
+  "Datacenter (Homelab)" tree shown collapsed below it. Render the
+  expanded tree like this (each row readable):
+    📁 Datacenter (Merck Environment)       ← expanded, highlighted
+       └─ 🖥 pve-east-01  (us-east-2)
+            ├─ 🟢 101 (jsanchez-about-01)
+            ├─ 🟢 102 (azcli-projects-01)
+            ├─ 🟢 103 (debian-skills-01)
+            ├─ 🟢 104 (fedora-hobbies-01)
+            └─ 🟢 105 (manjaro-contact-01)
+       └─ 💾 local (pve-east-01)
+       └─ 💾 local-zfs (pve-east-01)
+       └─ 🖥 pve-west-02  (us-west-2)
+       └─ 🖥 pve-eu-03    (eu-north-1)
+       └─ 🖥 pve-apac-04  (apac-southeast-1)
+    📁 Datacenter (Homelab)                 ← collapsed below
 
-WALL ART (single frame, centered on the wall behind/between the
-monitors):
-Exactly ONE large framed poster showing the cover of David Goggins'
-book **"Can't Hurt Me: Master Your Mind and Defy the Odds"** —
-iconic black background, a photograph portrait of David Goggins
-(muscular Black man, bald, intense serious expression, chest up)
-centered on the cover, with the title "CAN'T HURT ME" in bold
-yellow/gold uppercase caps spanning the top, and the subtitle
-"MASTER YOUR MIND AND DEFY THE ODDS" below the title in smaller
-white/gold text. Thin black frame, hung on the wall at eye level.
-This replaces ALL other wall decor — no other frames, no other
-prints on the walls.
+  Main pane on the right of the Proxmox UI shows VM 101 Summary
+  with CPU/memory line graphs and a small VM info panel. Tabs
+  across the top: Summary, Console, Hardware, Options. Proxmox
+  orange Start/Shutdown buttons visible. Make the sidebar text
+  legible enough to read the datacenter names.
+
+- RIGHT monitor: **Microsoft Azure Portal · DARK MODE** (black
+  #0b0b0e background, Azure blue #0078d4 accents). At the top, the
+  Azure logo (cube-like blue chevron) and the search bar "Search
+  resources, services, and docs". Left vertical nav with small
+  icons for Home, Dashboard, All services, Favorites, Resource
+  groups, Virtual machines (highlighted). Main pane is titled
+  **"Virtual machines"** and shows a large table with MANY rows of
+  VMs (10-15 visible) — columns: Name, Resource group, Location,
+  Status, Size, OS. Some rows show "Running" with a green dot,
+  others "Stopped" with gray. VM names look like AVD session hosts:
+  "avd-sh-e2-01", "avd-sh-e2-02", "avd-sh-w2-01", "avd-img-gold",
+  "mgmt-jump-01", etc. Rows alternate subtle dark-gray shading.
+  Top shows "+ Create", "Start", "Restart", "Stop", "Delete"
+  toolbar buttons in Azure style.
+
+- Do NOT show a terminal, a Merck corporate website, or a third
+  monitor. Both monitors are DARK.
+
+ROOM (wall palette picked to complement the subject's light-olive
+skin tone + warm undertones):
+- Primary walls: **warm greige** — muted taupe-gray with a cream
+  undertone (BM "Revere Pewter" territory, roughly #B6AB9A).
+  Brightens the olive skin without washing it out.
+- **Accent wall directly behind the two monitors**: a **deep inky
+  teal** (roughly #134E4A / #1F4D4B). Rich, editorial, frames the
+  dark-mode Proxmox + Azure Portal panels and makes the skin pop.
+- Light wood floor, small indoor plant in the corner, ergonomic
+  black mesh office chair. **NO desk lamp** — lighting comes from
+  the window and the ambient interior.
+
+WALL ART (single SMALL frame, centered on the wall behind/between
+the monitors — NOT large, roughly 8x10 inches, modest):
+Exactly ONE small framed piece showing the cover of **"Atomic
+Habits" by James Clear** — the iconic pale turquoise / light-teal
+cover (#A8D5D0-ish) with a minimalist white paper airplane design
+across the middle, bold black "Atomic Habits" wordmark stacked in
+the center, "James Clear" in smaller black type below, subtitle
+"An Easy & Proven Way to Build Good Habits & Break Bad Ones". Thin
+black frame, hung at eye level. Keep the frame proportionally
+small — it should NOT dominate the wall like a poster. Just a
+modest accent.
 
 STYLE / QUALITY:
 - Clean modern anime line art, subtle cel-shaded color, refined
@@ -212,12 +341,20 @@ const body = {
         { text: PROMPT },
         { text: "Reference #1: face geometry to preserve." },
         { inlineData: { mimeType: "image/jpeg", data: faceB64 } },
-        { text: "Reference #2: actual EDC items to include on the desk." },
+        { text: "Reference #2: the ACTUAL EDC items I own — render these on the desk (F-91W, G-Shock, green pocket knife, AirPods, Apple TV remote). Do NOT render the Burberry pens." },
         { inlineData: { mimeType: "image/jpeg", data: edcB64 } },
         {
           text: "Reference #3: the subject's actual right-forearm tattoo — a Japanese black-and-grey koi fish sleeve with a thick solid black rectangular wristband. Render this exact tattoo on his right forearm.",
         },
         { inlineData: { mimeType: "image/jpeg", data: tattooB64 } },
+        {
+          text: "Reference #4: the ACTUAL mate gourd I drink from — burgundy-purple leather-wrapped body, stainless-steel rim, silver bombilla straw, a handwritten 'Joaquin' signature etched on the front, three small decorative feet at the base. Replace any generic mate cup with this specific one.",
+        },
+        { inlineData: { mimeType: "image/jpeg", data: mateB64 } },
+        {
+          text: "Reference #5: the Merck wordmark logo — a specific green/teal color (#00857C). Use this exact logo on the employee badge described below.",
+        },
+        { inlineData: { mimeType: "image/png", data: merckB64 } },
       ],
     },
   ],
